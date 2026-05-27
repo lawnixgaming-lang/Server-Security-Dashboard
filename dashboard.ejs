@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Discord Bot Dashboard</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0d0f13;
+      color: #dcddde;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    /* ── Header ── */
+    header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .logo {
+      width: 52px;
+      height: 52px;
+      background: #5865F2;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+    header h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    header p {
+      font-size: 0.85rem;
+      color: #72767d;
+      margin-top: 0.2rem;
+    }
+
+    /* ── Status badge ── */
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: #23a55a22;
+      color: #23a55a;
+      border: 1px solid #23a55a55;
+      margin-top: 0.4rem;
+    }
+
+    /* ── Cards grid ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card {
+      background: #1e2027;
+      border: 1px solid #2e3035;
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+    }
+    .card-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #72767d;
+      margin-bottom: 0.5rem;
+    }
+    .card-value {
+      font-size: 1rem;
+      color: #fff;
+      word-break: break-all;
+    }
+    .card-value.big {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #5865F2;
+    }
+    .card-value a {
+      color: #00b0f4;
+      text-decoration: none;
+    }
+    .card-value a:hover { text-decoration: underline; }
+
+    .mono {
+      font-family: 'Cascadia Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      background: #2b2d31;
+      padding: 0.2rem 0.5rem;
+      border-radius: 5px;
+      color: #e3e5e8;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      font-size: 0.78rem;
+      color: #4e5058;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <header>
+      <div class="logo">🤖</div>
+      <div>
+        <h1>Discord Bot Dashboard</h1>
+        <p>Required-Join Verification System</p>
+        <span class="badge"><%= status %></span>
+      </div>
+    </header>
+
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-label">Bot Status</div>
+        <div class="card-value"><%= status %></div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Total Verified Users</div>
+        <div class="card-value big"><%= verifiedCount %></div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Required Server ID</div>
+        <div class="card-value">
+          <% if (serverId !== 'Not configured') { %>
+            <span class="mono"><%= serverId %></span>
+          <% } else { %>
+            <span style="color:#72767d">Not configured</span>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Verified Role ID</div>
+        <div class="card-value">
+          <% if (roleId !== 'Not configured') { %>
+            <span class="mono"><%= roleId %></span>
+          <% } else { %>
+            <span style="color:#72767d">Not configured</span>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="card" style="grid-column: 1 / -1;">
+        <div class="card-label">Invite Link</div>
+        <div class="card-value">
+          <% if (inviteLink) { %>
+            <a href="<%= inviteLink %>" target="_blank" rel="noopener noreferrer"><%= inviteLink %></a>
+          <% } else { %>
+            <span style="color:#72767d">Not configured — run /setrequiredserver</span>
+          <% } %>
+        </div>
+      </div>
+
+    </div>
+
+    <footer>
+      Last refreshed: <%= timestamp %> &nbsp;·&nbsp; discord.js v14
+    </footer>
+
+  </div>
+</body>
+</html>
